@@ -1,0 +1,10 @@
+[Bot]
+username = "caca"
+password = ""
+oauth_key = "NjYzMDgwNzY4NzYzMDY4NDIw.XhDUsA._8jyCde2wixnC-HenRs7GjfZ6zw"
+prefix = ""
+
+[Modules]
+# enabled = ["Debug", "Youtube", "DeathBattle", "Chuck", "Man", "Wundertime", "Fun"]
+enabled = ["Debug",]
+
