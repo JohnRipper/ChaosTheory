@@ -1,6 +1,11 @@
+from ct.objects.gateway import Ready
 
 
 class CogManager:
+    def igetattr(obj, attr):
+        for a in dir(obj):
+            if a.lower() == attr.lower():
+                return getattr(obj, a)
 
     def __init__(self):
         self.cogs = []

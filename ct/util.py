@@ -7,3 +7,5 @@ def prompt(query: str) -> bool:
         return True
     else:
         return False
+
+
