@@ -1,10 +1,10 @@
 
 from dataclasses import dataclass
-from ct.objects.discordobject import DiscordObject
+from ct.objects.discord_object import DiscordObject
 
 @dataclass
-class Embed_Field(DiscordObject):
-   name: str = "" # name of the field
-   value: str = "" # value of the field
-   inline_: bool = False # whether or not this field should display inline
+class EmbedField(DiscordObject):
+    name: str = ""  # name of the field
+    value: str = ""  # value of the field
+    inline_: bool = False  # whether or not this field should display inline
 

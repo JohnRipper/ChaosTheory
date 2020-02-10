@@ -1,10 +1,15 @@
 
 from dataclasses import dataclass
-from ct.objects.discordobject import DiscordObject
+from ct.objects.discord_object import DiscordObject
+
+class AuditLogChangeKey(DiscordObject):
+    name: str
+    object_changed: str
+    type: str
 
 @dataclass
-class Audit_Log_Change(DiscordObject):
-   new_value_: Mixed # new value of the key
-   old_value_: Mixed # old value of the key
-   key: str = "" #  
+class AuditLogChange(DiscordObject):
+   new_value_: Mixed  # new value of the key
+   old_value_: Mixed  # old value of the key
+   key: str = ""  # name of audit log change key
 

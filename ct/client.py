@@ -56,7 +56,8 @@ class Client:
                 await self.send(Identity(self.token).__discord__())
 
             if op == OpCode.Dispatch.value:
-                self.cm.do_event(event=message.get('t', False), data=message)
+                # check cogs for events
+                self.cm.do_event(event=message.get('t', False), data=message['d'])
                 # todo create a command router in cog manager.
 
             if op == OpCode.InvalidSession.value:

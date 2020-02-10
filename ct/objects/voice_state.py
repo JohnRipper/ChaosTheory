@@ -1,6 +1,7 @@
 
 from dataclasses import dataclass
-from ct.objects.discordobject import DiscordObject
+from ct.objects.discord_object import DiscordObject
+from ct.objects.guild_member import GuildMember
 
 from ct.objects.snowflake import Snowflake
 

@@ -1,9 +1,9 @@
 
 from dataclasses import dataclass
-from ct.objects.discordobject import DiscordObject
+from ct.objects.discord_object import DiscordObject
 
 @dataclass
-class Integration_Account(DiscordObject):
+class IntegrationAccount(DiscordObject):
    id: str = "" # id of the account
    name: str = "" # name of the account
 

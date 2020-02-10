@@ -1,9 +1,9 @@
 
 from dataclasses import dataclass
-from ct.objects.discordobject import DiscordObject
+from ct.objects.discord_object import DiscordObject
 
 @dataclass
-class Embed_Provider(DiscordObject):
-   name_: str = "" # name of provider
-   url_: str = "" # url of provider
+class EmbedProvider(DiscordObject):
+    name_: str = ""  # name of provider
+    url_: str = ""  # url of provider
 

@@ -2,6 +2,9 @@
 from dataclasses import dataclass
 from ct.objects.discordobject import DiscordObject
 
+from ct.objects.snowflake import Snowflake
+
+
 @dataclass
 class Audit_Log_Entry(DiscordObject):
    target_id: str = "" # id of the affected entity (webhook, user, role, etc.)

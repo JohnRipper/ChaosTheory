@@ -1,9 +1,9 @@
 
 from dataclasses import dataclass
-from ct.objects.discordobject import DiscordObject
+from ct.objects.discord_object import DiscordObject
 
 @dataclass
-class Message_Activity(DiscordObject):
+class MessageActivity(DiscordObject):
    type: int = -1 # type of message activity
    party_id_: str = "" #  
 

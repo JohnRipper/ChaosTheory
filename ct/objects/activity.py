@@ -1,9 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
-
-from ct.objects.guild import Guild
 from ct.objects.snowflake import Snowflake
-from ct.objects.user import User
+
 
 class ActivityType(Enum):
     NoType = -1  # just something i added incase of error.
@@ -40,7 +38,7 @@ class ActivitySecrets:
     spectate: str = ""  # the secret for spectating a game
     match: str = ""  # the secret for a specific instanced match
 
-ch
+
 @dataclass
 class ActivityParty:
     id: str = ""  # the id of the party

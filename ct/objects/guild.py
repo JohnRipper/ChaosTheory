@@ -5,10 +5,15 @@ from ct.objects.channel import Channel
 from ct.objects.discord_object import DiscordObject
 from ct.objects.emoji import Emoji
 from ct.objects.guild_member import GuildMember
+from ct.objects.presence import Presence
 from ct.objects.role import Role
 
 from ct.objects.snowflake import Snowflake
 from ct.objects.voice_state import VoiceState
+
+
+class GuildFeatures(object):
+   pass
 
 
 @dataclass
