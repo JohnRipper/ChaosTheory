@@ -16,7 +16,6 @@ class Cog:
         await self._bot.send(message=data)
 
 
-
     #####
     # Api Commands
     #####

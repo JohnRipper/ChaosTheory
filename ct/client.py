@@ -17,12 +17,12 @@ class Client:
         self.interval = 0
         self.sequence = 0
         self.cm = CogManager()
+        self.cm.import_module("Example", self)
 
     async def connect(self):
         # get a valid websocket url from discord
         gateway_data = ast.literal_eval(await self.http.gateway())
         g = Gateway(**gateway_data)
-
         async with websockets.connect(
             uri=g.url,
             timeout=60) as self._client:
@@ -44,7 +44,7 @@ class Client:
 
     async def _recv(self, message: str):
         message = json.loads(message)
-        print(f"recv:{message}")
+        #print(f"recv:{message}")
         op = message.get('op', -1)
         if op != -1:
             self.sequence = message.get("s", None)
@@ -57,7 +57,8 @@ class Client:
 
             if op == OpCode.Dispatch.value:
                 # check cogs for events
-                self.cm.do_event(event=message.get('t', False), data=message['d'])
+                print(message)
+                await self.cm.do_event(event=message.get('t', False), data=message['d'])
                 # todo create a command router in cog manager.
 
             if op == OpCode.InvalidSession.value:

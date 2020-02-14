@@ -2,12 +2,9 @@ from dataclasses import dataclass, fields
 import re as regex
 
 
-@dataclass
+# parent object
+@dataclass()
 class DiscordObject:
-
-    # parent object
-    def __init__(self):
-        pass
 
     def __dict__(self):
         dict = {}
@@ -18,6 +15,7 @@ class DiscordObject:
                     dict.update({str(field.name): getattr(self, str(field.name))})
         print(dict)
         return dict
+
 
     def get_required_fields(self) -> list:
         return [field.name for field in fields(self) if not self.__is_optional_field(field)]
