@@ -1,21 +1,18 @@
-
-from dataclasses import dataclass, fields, field
-from typing import List
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 from ct.objects.discord_object import DiscordObject
-
 from ct.objects.role import Role
-from ct.objects.snowflake import Snowflake
 from ct.objects.user import User
 
 
 @dataclass
 class Emoji(DiscordObject):
-    id: Snowflake  # emoji id
-    user_: User  # user that created this emoji
+    id: int  # emoji id
     name: str  # (can be null only in reaction emoji objects) # emoji name
-    roles_: List[Role]  # roles this emoji is whitelisted to
-    require_colons_: bool = False  # whether this emoji must be wrapped in colons
-    managed_: bool = False  # whether this emoji is managed
-    animated_: bool = False  # whether this emoji is animated
+    roles: List[Role]  # roles this emoji is whitelisted to
 
+    user: Optional[User] = field(default=None)  # user that created this emoji
+    managed: Optional[bool] = field(default=None)  # user that created this emoji
+    animated: Optional[bool] = field(default=None)  # user that created this emoji
+    require_colons: Optional[bool] = field(default=None)  # user that created this emoji

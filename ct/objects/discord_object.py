@@ -1,10 +1,27 @@
-from dataclasses import dataclass, fields
 import re as regex
+from dataclasses import dataclass, fields, is_dataclass
 
 
 # parent object
+
+
 @dataclass()
 class DiscordObject:
+
+    def __post_init__(instance):
+        """Convert all fields of type `dataclass` into an instance of the
+        specified data class if the current value is of type dict."""
+        cls = type(instance)
+        for f in fields(cls):
+            if not is_dataclass(f.type):
+                continue
+
+            value = getattr(instance, f.name)
+            if not isinstance(value, dict):
+                continue
+
+            new_value = f.type(**value)
+            setattr(instance, f.name, new_value)
 
     def __dict__(self):
         dict = {}

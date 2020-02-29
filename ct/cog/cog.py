@@ -8,6 +8,7 @@ class Cog:
                        for name in dir(self)
                        if "__" not in name
                        and hasattr(getattr(self, name), "__event__")]
+        self.api = self._bot.http
 
     #####
     # Client Control
@@ -19,9 +20,3 @@ class Cog:
     #####
     # Api Commands
     #####
-    async def send_message(self, message):
-        # todo get message example
-        data = {
-            "d": message
-        }
-        await self._bot.send(data)

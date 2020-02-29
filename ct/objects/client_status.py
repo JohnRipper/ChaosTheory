@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional
 
 from ct.objects.discord_object import DiscordObject
@@ -24,6 +24,6 @@ from ct.objects.discord_object import DiscordObject
 
 @dataclass
 class ClientStatus(DiscordObject):
-	desktop_: Optional[str]
-	mobile_: Optional[str]
-	web_: Optional[str]
+	desktop: Optional[str] = field(default=None)
+	mobile: Optional[str] = field(default=None)
+	web: Optional[str] = field(default=None)

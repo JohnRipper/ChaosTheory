@@ -1,9 +1,10 @@
+from dataclasses import dataclass, field
+from typing import Optional
 
-from dataclasses import dataclass
 from ct.objects.discord_object import DiscordObject
+
 
 @dataclass
 class EmbedProvider(DiscordObject):
-    name_: str = ""  # name of provider
-    url_: str = ""  # url of provider
-
+    name: Optional[str] = field(default=None)  # name of provider
+    url: Optional[str] = field(default=None)  # url of provider

@@ -2,7 +2,6 @@ from dataclasses import dataclass, field
 from typing import List, Optional
 
 from ct.objects.discord_object import DiscordObject
-
 from ct.objects.overwrite import Overwrite
 from ct.objects.snowflake import Snowflake
 from ct.objects.user import User
@@ -10,7 +9,7 @@ from ct.objects.user import User
 
 @dataclass
 class Channel(DiscordObject):
-    id: Snowflake  # the id of this channel
+    id: int  # the id of this channel
     owner_id_: Snowflake  # id of the DM creator
     application_id_: Snowflake  # application id of the group DM creator if it is bot-created
     parent_id_: Snowflake  # id of the parent category for a channel (each parent category can contain up to 50 channels)

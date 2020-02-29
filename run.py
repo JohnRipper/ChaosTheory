@@ -1,8 +1,8 @@
 import asyncio
-import websockets
+import sys
+
 from ct.client import Client
 from ct.config import Configuration
-import sys
 
 # read configuration file.
 try:
@@ -13,7 +13,7 @@ except FileNotFoundError:
 
 
 # load client
-c = Client(token='')
+c = Client(token='Mzg4MTQ3MjE0NDQ4NDU5Nzc5.XiRv1A._HA3M_Cng8L2_RaeB65Lz-ImuPQ')
 
 # connect
 asyncio.get_event_loop().run_until_complete(c.connect())
