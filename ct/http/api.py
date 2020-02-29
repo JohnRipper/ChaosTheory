@@ -1,10 +1,12 @@
 from ct.http.client import HttpClient
 from ct.http.endpoint import Endpoint
+from ct.objects.embed import Embed
 
 
 class Api:
     def __init__(self, token: str):
-        self._client = HttpClient(token=token)
+        self.__client = HttpClient(token=token)
+
 
     async def gateway(self):
         """
@@ -18,6 +20,14 @@ class Api:
         }
         """
         print(Endpoint.gateway)
-        response = await self._client.get(url=Endpoint.gateway)
+        response = await self.__client.get(url=Endpoint.gateway)
         return await response.text()
+
+    async def create_message(self, channel_id: int, content: str, tts=False, embed: Embed = None):
+
+        url = Endpoint.BASE + f"/channels/{channel_id}/messages"
+        data = {'content': content}
+        if embed:
+            data.update({'embed': embed.__dict__})
+        result = await self.__client.post(url, data)
 
