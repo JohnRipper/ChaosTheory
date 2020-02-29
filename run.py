@@ -13,7 +13,7 @@ except FileNotFoundError:
 
 
 # load client
-c = Client(token='Mzg4MTQ3MjE0NDQ4NDU5Nzc5.XiRv1A._HA3M_Cng8L2_RaeB65Lz-ImuPQ')
+c = Client(token='')
 
 # connect
 asyncio.get_event_loop().run_until_complete(c.connect())
