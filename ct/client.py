@@ -8,15 +8,19 @@ from ct.cog.cog_manager import CogManager
 from ct.objects.payload import OpCode, Identity
 from ct.http.api import Api
 from ct.objects.api import Gateway
+from ct.logger import ChaosLogger
 
 class Client:
     def __init__(self, token):
         self._client = None
+        self.log = ChaosLogger("ChaosTheory")
+        self.log.set_level(ChaosLogger.RECV)
         self.http = Api(token=token)
         self.token = token
         self.interval = 0
         self.sequence = 0
         self.cm = CogManager()
+        # todo config imports.
         self.cm.import_module("Example", self)
 
     async def connect(self):
@@ -43,21 +47,17 @@ class Client:
             raise Exception("heart beat interval wtf")
 
     async def _recv(self, message: str):
+        self.log.recv(message)
         message = json.loads(message)
-        #print(f"recv:{message}")
         op = message.get('op', -1)
         if op != -1:
             self.sequence = message.get("s", None)
-            print(f"s:{self.sequence}")
-
             if op == OpCode.Hello.value:
                 self.interval = message['d'].get('heartbeat_interval', 0)
                 asyncio.create_task(self.heartbeat())
                 await self.send(Identity(self.token).__discord__())
-
             if op == OpCode.Dispatch.value:
                 # check cogs for events
-                print(message)
                 await self.cm.do_event(event=message.get('t', False), data=message['d'])
                 # todo create a command router in cog manager.
 
@@ -66,7 +66,7 @@ class Client:
                 print("Invalid session, disconnecting. ")
 
     async def send(self, message: str = None):
-        print(f"send:{message}")
+        self.log.sent(message)
 
         if type(message) is str:
             await self._client.send(message)
