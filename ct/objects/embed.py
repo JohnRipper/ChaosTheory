@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
+from dataclasses_json import dataclass_json
+
 from ct.objects.discord_object import DiscordObject
 from ct.objects.embed_author import EmbedAuthor
 from ct.objects.embed_field import EmbedField
@@ -11,9 +13,10 @@ from ct.objects.embed_thumbnail import EmbedThumbnail
 from ct.objects.embed_video import EmbedVideo
 
 
+@dataclass_json
 @dataclass
 class Embed(DiscordObject):
-    footer: Optional[EmbedFooter] = field(default=None)  # footer information
+    footer: Optional[EmbedFooter] = field(default_factory=EmbedFooter)  # footer information
     image: Optional[EmbedImage] = field(default=None)  # image information
     thumbnail: Optional[EmbedThumbnail] = field(default=None)  # thumbnail information
     video: Optional[EmbedVideo] = field(default=None)  # video information

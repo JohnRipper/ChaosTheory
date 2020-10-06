@@ -1,9 +1,12 @@
 from dataclasses import dataclass, field
 from typing import Optional
 
+from dataclasses_json import dataclass_json
+
 from ct.objects.discord_object import DiscordObject
 
 
+@dataclass_json
 @dataclass
 class EmbedFooter(DiscordObject):
     text: str  # footer text

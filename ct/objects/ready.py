@@ -2,7 +2,7 @@
 #
 # Copyright 2019, JohnnyCarcinogen ( https://github.com/JohnRipper/ ), All rights reserved.
 #  
-# client_status.py Created by JohnnyCarcinogen at 2/10/20
+# ready.py Created by dev at 4/7/20
 # This file is part of ChaosTheory.
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,25 +16,23 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
+
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import List
 
 from ct.objects.discord_object import DiscordObject
+from ct.objects.user import User
 
 
 @dataclass
-class ClientStatus(DiscordObject):
-	desktop: Optional[str] = field(default=None)
-	mobile: Optional[str] = field(default=None)
-	web: Optional[str] = field(default=None)
-
-	def online(self):
-		message = ''
-		if self.desktop is not None:
-			message = 'desktop'
-		elif self.mobile is not None:
-			message = 'mobile'
-		elif self.web is not None:
-			message = 'web'
-		else:
-			message = 'None'
+class Ready(DiscordObject):
+    v: int
+    user_settings: None
+    user: User
+    application: None
+    session_id: str
+    _trace: List[str] = field(default_factory=list)
+    relationships: List[User] = field(default_factory=User)
+    private_channels: List[User] = field(default_factory=User)
+    presences: List[User] = field(default_factory=User)
+    guilds: List[User] = field(default_factory=User)

@@ -18,3 +18,4 @@ class User(DiscordObject):
     email: Optional[str] = None  # the user's email
     flags: Optional[int] = None  #
     premium_type: Optional[int] = None  #
+    public_flags: Optional[int] = None  #

@@ -1,11 +1,16 @@
+import json
+
 from ct.http.client import HttpClient
 from ct.http.endpoint import Endpoint
+from ct.logger import ChaosLogger
 from ct.objects.embed import Embed
 
 
 class Api:
     def __init__(self, token: str):
         self.__client = HttpClient(token=token)
+        self.ep = Endpoint()
+        self.log = ChaosLogger("Api")
 
 
     async def gateway(self):
@@ -26,8 +31,16 @@ class Api:
     async def create_message(self, channel_id: int, content: str, tts=False, embed: Embed = None):
 
         url = Endpoint.BASE + f"/channels/{channel_id}/messages"
-        data = {'content': content}
+        data = {"content": str(content)}
         if embed:
-            data.update({'embed': embed.__dict__})
-        result = await self.__client.post(url, data)
+            embed_dict = embed.to_dict()
+            data.update({"embed": embed_dict})
+        result = await self.__client.post(url, {"payload_json": json.dumps(data)})
 
+    async def get_user_from_id(self, user_id: int):
+        url = self.ep.users(user_id=user_id)
+        result = await self.__client.get(url)
+        result = await result.json()
+        if 'message' in result:
+            self.log.warning(f'get_user_from_id error : {result.get("message")}')
+        return result

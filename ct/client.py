@@ -5,10 +5,14 @@ import json
 import websockets
 
 from ct.cog.cog_manager import CogManager
-from ct.objects.payload import OpCode, Identity
+from ct.command import Command
 from ct.http.api import Api
-from ct.objects.api import Gateway
 from ct.logger import ChaosLogger
+from ct.objects.api import Gateway
+from ct.objects.payload import OpCode, Identity
+from ct.objects.ready import Ready
+from ct.objects.user import User
+
 
 class Client:
     def __init__(self, token):
@@ -17,9 +21,11 @@ class Client:
         self.log.set_level(ChaosLogger.RECV)
         self.http = Api(token=token)
         self.token = token
+        self.identity: User
         self.interval = 0
         self.sequence = 0
         self.cm = CogManager()
+        self._guilds = {}
         # todo config imports.
         self.cm.import_module("Example", self)
 
@@ -47,7 +53,7 @@ class Client:
             raise Exception("heart beat interval wtf")
 
     async def _recv(self, message: str):
-        self.log.recv(message)
+        # self.log.recv(message)
         message = json.loads(message)
         op = message.get('op', -1)
         if op != -1:
@@ -58,7 +64,16 @@ class Client:
                 await self.send(Identity(self.token).__discord__())
             if op == OpCode.Dispatch.value:
                 # check cogs for events
-                await self.cm.do_event(event=message.get('t', False), data=message['d'])
+                e = message.get('t', False)
+                await self.cm.do_event(event=e, data=message['d'])
+                if e == 'READY':
+                    self.identity = Ready(**message['d'])
+
+                if e == 'MESSAGE_CREATE':
+                    if message['d']['content'].startswith("."):
+                        c = Command(prefix=".", data=message['d'])
+                        await self.cm.do_command(c)
+
                 # todo create a command router in cog manager.
 
             if op == OpCode.InvalidSession.value:
@@ -66,7 +81,7 @@ class Client:
                 print("Invalid session, disconnecting. ")
 
     async def send(self, message: str = None):
-        self.log.sent(message)
+        self.log.sent(json.dumps(message))
 
         if type(message) is str:
             await self._client.send(message)

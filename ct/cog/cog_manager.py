@@ -2,9 +2,12 @@ import asyncio
 import importlib
 from types import ModuleType
 
+from ct.command import Command
 from ct.objects.gateway import Ready
 from ct.objects.message import Message
 from ct.objects.presence import Presence
+from ct.objects.voice_server_update import VoiceServerUpdate
+from ct.objects.voice_state import VoiceState
 
 
 class CogManager:
@@ -52,17 +55,20 @@ class CogManager:
                 "READY": Ready,
                 "GUILD_CREATE": None,
                 "MESSAGE_CREATE": Message,
+                "VOICE_SERVER_UPDATE": VoiceServerUpdate,
+                "VOICE_STATE_UPDATE": VoiceState,
                 "PRESENCE_UPDATE": Presence
             }
             print(f"Attempting {event}")
-            if choice:= routes.get(event, False):
+            if choice := routes.get(event, False):
                 for cog in self.cogs.values():
                     for meth in cog.events:
                         if meth.__event__ == event:
                             asyncio.create_task(meth(choice(**data)))
 
-
-            pass
-
-    def do_command(self, command):
-        pass
+    async def do_command(self, command: Command):
+        print(f"Attempting {command.name}")
+        for cog in self.cogs.values():
+            for meth in cog.commands:
+                if command.name in meth.command_aliases:
+                    asyncio.create_task(meth(command))

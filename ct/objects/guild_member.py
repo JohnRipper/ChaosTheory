@@ -11,6 +11,7 @@ class GuildMember(DiscordObject):
    mute: bool  # whether the user is muted in voice channels
    user: User  # the user this guild member represents
    roles: [int]  # array of snowflakes
+   hoisted_role: Optional[int] = field(default=None)
    nick: Optional[str] = field(default=None)  # this users guild nickname (if one is set)
    joined_at: str = ""  # when the user joined the guild
    premium_since: Optional[str] = field(default=None)  # when the user used their Nitro boost on the server

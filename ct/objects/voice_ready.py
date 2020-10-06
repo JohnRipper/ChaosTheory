@@ -2,7 +2,7 @@
 #
 # Copyright 2019, JohnnyCarcinogen ( https://github.com/JohnRipper/ ), All rights reserved.
 #  
-# client_status.py Created by JohnnyCarcinogen at 2/10/20
+# voice_ready.py Created by dev at 4/7/20
 # This file is part of ChaosTheory.
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,25 +16,19 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import List
 
 from ct.objects.discord_object import DiscordObject
 
 
 @dataclass
-class ClientStatus(DiscordObject):
-	desktop: Optional[str] = field(default=None)
-	mobile: Optional[str] = field(default=None)
-	web: Optional[str] = field(default=None)
-
-	def online(self):
-		message = ''
-		if self.desktop is not None:
-			message = 'desktop'
-		elif self.mobile is not None:
-			message = 'mobile'
-		elif self.web is not None:
-			message = 'web'
-		else:
-			message = 'None'
+class VoiceReady(DiscordObject):
+   ssrc: int
+   ip: str
+   port: int
+   heartbeat_interval: int
+   modes: List[str] = field(default_factory=str)
+   experiments: List[str] = field(default_factory=str)

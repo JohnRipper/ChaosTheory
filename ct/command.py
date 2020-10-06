@@ -2,7 +2,7 @@
 #
 # Copyright 2019, JohnnyCarcinogen ( https://github.com/JohnRipper/ ), All rights reserved.
 #  
-# client_status.py Created by JohnnyCarcinogen at 2/10/20
+# command.py Created by dev at 3/27/20
 # This file is part of ChaosTheory.
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,25 +16,29 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
-from dataclasses import dataclass, field
-from typing import Optional
+import re
 
-from ct.objects.discord_object import DiscordObject
+from ct.objects.message import Message
 
 
-@dataclass
-class ClientStatus(DiscordObject):
-	desktop: Optional[str] = field(default=None)
-	mobile: Optional[str] = field(default=None)
-	web: Optional[str] = field(default=None)
+def makeCommand(aliases: [], description: str):
+    def wrap(f):
+        f.__command__ = True
+        f.command_aliases = aliases
+        f.__description__ = description
+        return f
 
-	def online(self):
-		message = ''
-		if self.desktop is not None:
-			message = 'desktop'
-		elif self.mobile is not None:
-			message = 'mobile'
-		elif self.web is not None:
-			message = 'web'
-		else:
-			message = 'None'
+    return wrap
+
+
+class Command:
+    CMD_PATTERN = command_pattern = "{}(\w+)(\\b.*)"
+
+    def __init__(self, prefix: str, data: dict):
+        self.prefix = prefix
+        self.message = Message(**data)
+        self.name = "not found"
+        parsed = re.search(self.CMD_PATTERN.format(prefix), self.message.content)
+        self.raw_message = self.message.content
+        if parsed is not None:
+            self.name, self.message.content = parsed.groups()
